@@ -1,1 +1,1 @@
-# svyCapture
+# svyscreencapture

@@ -1,0 +1,12 @@
+Manifest-Version: 1.0
+Bundle-Name: CaptureServices
+Bundle-SymbolicName: svycapture
+Package-Type: Web-Service
+Bundle-Version: 1.0.0
+
+Name: audio/audio.spec
+Web-Service: True
+
+Name: screen/screen.spec
+Web-Service: True
+

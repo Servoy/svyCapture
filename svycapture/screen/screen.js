@@ -7,7 +7,7 @@ angular.module('svycaptureScreen', ['servoy']).factory("svycaptureScreen", funct
 				} else {
 					classname = '.' + classname;
 				}
-				html2canvas(document.querySelector(classname, { foreignObjectRendering: false, useCORS: true }).then(function(canvas) {
+				html2canvas(document.querySelector(classname), { foreignObjectRendering: false, useCORS: true }).then(function(canvas) {
 					var image = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
 					$window.executeInlineScript(callback.formname, callback.script, [image]);
 

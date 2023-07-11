@@ -1,0 +1,17 @@
+{
+  "name": "@servoy/svycapture",
+  "version": "1.0.0",
+  "peerDependencies": {
+    "@angular/common": "^15",
+    "@angular/core": "^15"
+  },
+  "dependencies": {
+	"html2canvas": "^1.4.1",
+    "tslib": "*"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Servoy/svyCapture"
+  }
+}

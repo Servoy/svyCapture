@@ -144,9 +144,9 @@ angular.module('svycaptureAudio', ['servoy']).factory("svycaptureAudio", functio
 			},
 			stop: function(cb) {
 				var cc = document.getElementById("audioCanvasContainer");
-				cc.style.visibility = 'hidden';
+				if (cc) cc.style.visibility = 'hidden';
 				scope.model.mediaRecorder.stop();
-				$window.executeInlineScript(cb.formname, cb.script, []);
+				if (cb) $window.executeInlineScript(cb.formname, cb.script, []);
 			}
 		}
 	}).run(function($rootScope, $services) { })

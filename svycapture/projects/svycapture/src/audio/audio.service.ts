@@ -150,8 +150,8 @@ export class SvyCaptureAudio {
 	
 	public stop(cb: Function) {
 		this.mediaRecorder.stop();
-		this.servoyService.executeInlineScript(cb.formname, cb.script, []);
-		this.cc.remove();
+		if (cb) this.servoyService.executeInlineScript(cb.formname, cb.script, []);
+		if (this.cc) this.cc.remove();
 	}
 }
 

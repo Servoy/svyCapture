@@ -1,6 +1,6 @@
 {
   "name": "@servoy/svycapture",
-  "version": "1.0.0",
+  "version": "2023.9.0",
   "peerDependencies": {
     "@angular/common": "^15",
     "@angular/core": "^15"

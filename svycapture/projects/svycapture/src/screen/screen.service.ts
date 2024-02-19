@@ -5,11 +5,11 @@ import html2canvas from 'html2canvas';
 @Injectable()
 export class SvyCaptureScreen {
 	v: HTMLVideoElement ;
-	ccb: Function;
+	ccb: (...args: unknown[]) => void;
 	
     constructor(private servoyService: ServoyPublicService) {}
 
-    public capture(classname: string, callback: Function) {
+    public capture(classname: string, callback: (...args: unknown[]) => void) {
 		if (!classname) {
 			classname = '.svy-body'
 		} else {
@@ -17,7 +17,7 @@ export class SvyCaptureScreen {
 		}
 		html2canvas(document.querySelector(classname), { foreignObjectRendering: false, useCORS: true }).then((canvas) => {
 			const image = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
-			this.servoyService.executeInlineScript(callback.formname, callback.script, [image]);
+			callback(image);
 		});
 	}
 	
@@ -38,10 +38,10 @@ export class SvyCaptureScreen {
 		this.v.srcObject = null;
 
 		// you can send image back to server
-		this.servoyService.executeInlineScript(this.ccb.formname, this.ccb.script, [image]);
+		this.ccb(image);
 	}
 	
-	public captureViaDisplayMedia(callback: Function) {
+	public captureViaDisplayMedia(callback: (...args: unknown[]) => void) {
 		this.v = document.getElementById("videoCaptureCanvas") as HTMLVideoElement ;
 		if (!this.v) {
 			const elv = document.createElement("video")
@@ -66,9 +66,4 @@ export class SvyCaptureScreen {
 			console.log(err);
 		});
 	}
-}
-
-class Function {
-    public formname: string;
-    public script: string;
 }

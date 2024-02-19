@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { ServoyPublicService } from '@servoy/public';
 
+type CallableFunction = (...args: unknown[]) => void;
+
 @Injectable()
 export class SvyCaptureAudio {
 	bufferLength: number;
@@ -11,8 +13,8 @@ export class SvyCaptureAudio {
 	canvasCtx: CanvasRenderingContext2D;
 	ac: HTMLCanvasElement;
 	cc: HTMLDivElement; 
-    ccb: Function;
-    ccberr: Function;
+    ccb: CallableFunction;
+    ccberr: CallableFunction;
     constraints = { audio: true };
     chunks = [];
 
@@ -73,7 +75,7 @@ export class SvyCaptureAudio {
     }
     
     onError = (err: Error) => {
-		this.servoyService.executeInlineScript(this.ccberr.formname, this.ccberr.script, [err]);
+		this.ccberr(err);
     }
     
     onSuccess = (stream: MediaStream) => {
@@ -92,7 +94,7 @@ export class SvyCaptureAudio {
             reader.readAsDataURL(blob);
             reader.onloadend = () => {
             	const base64data = reader.result;
-                this.servoyService.executeInlineScript(this.ccb.formname, this.ccb.script, [base64data]);
+                this.ccb(base64data);
             }
         }
     
@@ -101,7 +103,7 @@ export class SvyCaptureAudio {
         }
     }
     
-    public capture(cb: Function, cberror: Function) {
+    public capture(cb: CallableFunction, cberror: CallableFunction) {
         if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
             this.cc = document.getElementById("audioCanvasContainer") as HTMLDivElement;
             if (!this.cc) {
@@ -148,14 +150,9 @@ export class SvyCaptureAudio {
         }
     }
 	
-	public stop(cb: Function) {
+	public stop(cb: CallableFunction) {
 		this.mediaRecorder.stop();
-		if (cb) this.servoyService.executeInlineScript(cb.formname, cb.script, []);
+		if (cb) cb();
 		if (this.cc) this.cc.remove();
 	}
-}
-
-class Function {
-    public formname: string;
-    public script: string;
 }

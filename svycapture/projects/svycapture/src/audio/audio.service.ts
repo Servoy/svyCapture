@@ -6,7 +6,7 @@ type CallableFunction = (...args: unknown[]) => void;
 @Injectable()
 export class SvyCaptureAudio {
 	bufferLength: number;
-	dataArray: Uint8Array;
+	dataArray: Uint8Array<ArrayBuffer>;
 	mediaRecorder: MediaRecorder;
 	audioCtx: AudioContext;
 	analyser: AnalyserNode;
